@@ -10,6 +10,9 @@ class _InputPageState extends State<InputPage> {
   String _nombre = '';
   String _email = '';
   String _fecha = '';
+  String _opcionSelec = 'Volar';
+
+  List<String> _poderes = ['Volar', 'Fuerza', 'Rayos X'];
 
   TextEditingController _inputText = new TextEditingController();
 
@@ -29,6 +32,8 @@ class _InputPageState extends State<InputPage> {
           _crearPassword(),
           Divider(),
           _crearFecha(context),
+          Divider(),
+          _crearDropdown(),
           Divider(),
           _crearPersona(),
         ],
@@ -61,6 +66,7 @@ class _InputPageState extends State<InputPage> {
     return ListTile(
       title: Text('Nombre: $_nombre'),
       subtitle: Text('Email: $_email'),
+      trailing: Text(_opcionSelec),
     );
   }
 
@@ -77,19 +83,6 @@ class _InputPageState extends State<InputPage> {
         onChanged: (valor) => setState(() {
               _email = valor;
             }));
-  }
-
-  Widget _crearPassword() {
-    return TextField(
-        obscureText: true,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          hintText: 'Ingrese una password',
-          labelText: 'Password',
-          suffixIcon: Icon(Icons.lock_open),
-          icon: Icon(Icons.lock),
-        ),
-        onChanged: (valor) {});
   }
 
   Widget _crearFecha(BuildContext context) {
@@ -128,5 +121,50 @@ class _InputPageState extends State<InputPage> {
         _inputText.text = _fecha; */
       });
     }
+  }
+
+  List<DropdownMenuItem<String>> getOpciones() {
+    List<DropdownMenuItem<String>> lista = new List();
+
+    _poderes.forEach((poder) {
+      lista.add(DropdownMenuItem(
+        child: Text(poder),
+        value: poder,
+      ));
+    });
+    return lista;
+  }
+
+  Widget _crearDropdown() {
+    return Row(
+      children: [
+        Icon(Icons.select_all),
+        SizedBox(
+          width: 30.0,
+        ),
+        DropdownButton(
+          value: _opcionSelec,
+          items: getOpciones(),
+          onChanged: (opt) {
+            setState(() {
+              _opcionSelec = opt;
+            });
+          },
+        )
+      ],
+    );
+  }
+
+  Widget _crearPassword() {
+    return TextField(
+        obscureText: true,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: 'Ingrese una password',
+          labelText: 'Password',
+          suffixIcon: Icon(Icons.lock_open),
+          icon: Icon(Icons.lock),
+        ),
+        onChanged: (valor) {});
   }
 }

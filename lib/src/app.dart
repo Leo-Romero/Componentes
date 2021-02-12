@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: [
         const Locale('en', 'US'), // American English
-        const Locale('es', 'AR'),
+        const Locale('es', 'AR'), // español Argentina
       ],
       title: 'Componentes App',
       initialRoute: '/',
